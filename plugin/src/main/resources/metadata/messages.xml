@@ -9,6 +9,31 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+
+
+
+
+    <!-- Leftover Debug Code (LDC) -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector">
+        <Details>Detect the leftover debug code.
+        </Details>
+    </Detector>
+
+    <BugPattern type="LEFTOVER_DEBUG_CODE">
+        <ShortDescription>Leftover Debug Code.</ShortDescription>
+        <LongDescription>The code for debugging should be removed before release.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>Debug code may includes sensitive information such as:</p>
+<ul>
+<li>configuration</li>
+<li>control portion of system</li>
+</ul>
+<p>The code for debugging should be removed before release.</p>
+]]>
+        </Details>
+    </BugPattern>
+
     <!-- Predictable Pseudo Random Generator (PRG) -->
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector">
         <Details>Detect the use of predictable Pseudo Random Generator (PRG).
