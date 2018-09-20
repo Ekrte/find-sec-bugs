@@ -10,9 +10,6 @@
     </Plugin>
 
 
-
-
-
     <!-- Leftover Debug Code (LDC) -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector">
         <Details>Detect the leftover debug code.
@@ -33,6 +30,40 @@
 ]]>
         </Details>
     </BugPattern>
+
+    <!-- ERROR_CONDITION_WITHOUT_ACTION (ECWA) -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.ErrorConditionWithoutActionDetector">
+        <Details>Detect the error condition without action.
+        </Details>
+    </Detector>
+
+    <BugPattern type="ERROR_CONDITION_WITHOUT_ACTION">
+        <ShortDescription>Error condition without action.</ShortDescription>
+        <LongDescription>If errorable case is not appropriately handled, it causes unexpected behaviour.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>If errorable case is not appropriately handled, it causes unexpected behaviour.
+In a below example, there is no exception handling even if exception is caught in try block.</p>
+<br/>
+
+<p>
+    <b>Vulnerable Code:</b><br/>
+<pre>try {
+        ...
+        //do something
+    } catch (Exception e) {
+        //do nothing
+    }
+}</pre>
+</p>
+<br/>
+]]>
+        </Details>
+    </BugPattern>
+
+
+
+
 
     <!-- Predictable Pseudo Random Generator (PRG) -->
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector">

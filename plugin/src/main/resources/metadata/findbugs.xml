@@ -7,7 +7,7 @@
 
     <!-- Registers engine for taint analysis dataflow -->
     <EngineRegistrar class="com.h3xstream.findsecbugs.taintanalysis.EngineRegistrar"/>
-    
+
     <!--
     Detector : Java class that analyzes the bytecode
     Bug Pattern : Vulnerability/Code at risk*. All bug patterns are describe in messages.xml.
@@ -15,6 +15,7 @@
     * Not all bug patterns are direct vulnerabilities. For example, the identification of Struts/Spring/Rest/SOAP endpoints.
     -->
 
+    <Detector class="com.h3xstream.findsecbugs.sparrow.ErrorConditionWithoutActionDetector" reports="ERROR_CONDITION_WITHOUT_ACTION"/>
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector" reports="PREDICTABLE_RANDOM,PREDICTABLE_RANDOM_SCALA"/>
     <Detector class="com.h3xstream.findsecbugs.endpoint.ServletEndpointDetector"
               reports="SERVLET_PARAMETER,SERVLET_CONTENT_TYPE,SERVLET_SERVER_NAME,SERVLET_SESSION_ID,SERVLET_QUERY_STRING,SERVLET_HEADER,SERVLET_HEADER_REFERER,SERVLET_HEADER_USER_AGENT"/>
@@ -124,6 +125,8 @@
     <Detector class="com.h3xstream.findsecbugs.kotlin.KotlinHardcodePasswordInMapDetector" reports="HARD_CODE_PASSWORD"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector" reports="LEFTOVER_DEBUG_CODE"/>
 
+
+    <BugPattern type="ERROR_CONDITION_WITHOUT_ACTION" abbrev="SECECWA" category="SECURITY"/>
     <BugPattern type="LEFTOVER_DEBUG_CODE" abbrev="SECLDC" category="SECURITY"/>
     <BugPattern type="HTTP_PARAMETER_POLLUTION" abbrev="SECHPP" category="SECURITY"/>
     <BugPattern type="SMTP_HEADER_INJECTION" abbrev="SECSMTP" category="SECURITY"/>
