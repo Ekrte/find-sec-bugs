@@ -124,8 +124,9 @@
     <Detector class="com.h3xstream.findsecbugs.crypto.ErrorMessageExposureDetector" reports="INFORMATION_EXPOSURE_THROUGH_AN_ERROR_MESSAGE"/>
     <Detector class="com.h3xstream.findsecbugs.kotlin.KotlinHardcodePasswordInMapDetector" reports="HARD_CODE_PASSWORD"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector" reports="LEFTOVER_DEBUG_CODE"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector" reports="INFO_EXPOSURE_BY_COMMENTS_SERVLET"/>
 
-
+    <BugPattern type="INFO_EXPOSURE_BY_COMMENTS_SERVLET" abbrev="SECIEBC" category="SECURITY"/>
     <BugPattern type="ERROR_CONDITION_WITHOUT_ACTION" abbrev="SECECWA" category="SECURITY"/>
     <BugPattern type="LEFTOVER_DEBUG_CODE" abbrev="SECLDC" category="SECURITY"/>
     <BugPattern type="HTTP_PARAMETER_POLLUTION" abbrev="SECHPP" category="SECURITY"/>

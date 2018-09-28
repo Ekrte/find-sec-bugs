@@ -62,8 +62,39 @@ In a below example, there is no exception handling even if exception is caught i
     </BugPattern>
 
 
+    <!-- INFO_EXPOSURE_BY_COMMENTS (IEBC) -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector">
+        <Details>Detect the info exposure by comments.
+        </Details>
+    </Detector>
 
+    <BugPattern type="INFO_EXPOSURE_BY_COMMENTS_SERVLET">
+        <ShortDescription>Info exposure by comments.</ShortDescription>
+        <LongDescription>Sensitive information such as password in comments could compromise security of system.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>Sensitive information such as password in comments could compromise security of system.
+If developer wrote sensitive information in comments for ease of debugging,
+anyone who has permission to access source code could easily break into system.</p>
+<br/>
 
+<p> Below a bunch of code example is from juilet-test-suite
+    <b>Vulnerable Code:</b><br/>
+<pre>public void daoTest() throwsException {
+        /* FLAW: sensitive information exposed in client-side code comments */
+            response.getWriter().println("<!--DB username = joe, DB password = 123-->" +
+            "<form action=\"/test\" method=post>" +
+            "<input type=text name=dbusername>" +
+            "<input type=test name=dbpassword>" +
+            "<input type=submit value=Submit>" +
+            "</form>");
+    }
+}</pre>
+</p>
+<br/>
+]]>
+        </Details>
+    </BugPattern>
 
     <!-- Predictable Pseudo Random Generator (PRG) -->
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector">
