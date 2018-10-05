@@ -60,11 +60,11 @@ public class ImproperCheckForExceptionalConditionsDetector extends PreorderVisit
 
         if ("java.lang.NullPointerException".equals(name)) {
             bugReporter.reportBug(new BugInstance(this, "USE_OF_NULL_POINTER_EXCEPTION_CATCH", NORMAL_PRIORITY).addClassAndMethod(this)
-                    .addSourceLine(this.classContext, this, sourceCodeLine));
+                    .addSourceLine(this.classContext, this, obj.getHandlerPC()));
         }
         else if ("java.lang.Exception".equals(name)) {
             bugReporter.reportBug(new BugInstance(this, "USE_OF_GENERIC_EXCEPTION_CATCH", NORMAL_PRIORITY).addClassAndMethod(this)
-                    .addSourceLine(this.classContext, this, sourceCodeLine));
+                    .addSourceLine(this.classContext, this, obj.getHandlerPC()));
         }
         checkDuplicate.add(sourceCodeLine);
     }
