@@ -117,7 +117,8 @@ public class ErrorConditionWithoutActionDetector extends PreorderVisitor impleme
                         Instruction third_inst = handle.getNext().getNext().getInstruction();
                         // If third instruction is ATHROW, it just throwing exception without a other action in catch block.
                         // This is delegating exception handling to other catch block. So, skip this case.
-                        if (third_inst instanceof ATHROW) continue;
+                        // If third instruction is INVOKEVIRTUAL,it call virtual method in catch block.
+                        if (third_inst instanceof ATHROW || third_inst instanceof INVOKEVIRTUAL) continue;
                     }
                     JavaClass javaClass = classContext.getJavaClass();
 

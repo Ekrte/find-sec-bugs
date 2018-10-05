@@ -20,10 +20,14 @@ package com.h3xstream.findsecbugs.sparrow;
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Detector;
+import edu.umd.cs.findbugs.SourceLineAnnotation;
 import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.visitclass.PreorderVisitor;
 
 import org.apache.bcel.classfile.CodeException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The code for debugging should be removed before release.
@@ -35,6 +39,7 @@ public class ImproperCheckForExceptionalConditionsDetector extends PreorderVisit
 
     private BugReporter bugReporter;
     private ClassContext classContext;
+    Set<Integer> checkDuplicate = new HashSet<>();
 
     public ImproperCheckForExceptionalConditionsDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
@@ -42,6 +47,11 @@ public class ImproperCheckForExceptionalConditionsDetector extends PreorderVisit
 
     @Override
     public void visit(CodeException obj) {
+        SourceLineAnnotation sourceLineAnnotation = SourceLineAnnotation.fromVisitedInstruction(this.classContext, this, obj.getHandlerPC());
+        // Check this exception is already detected.
+        Integer sourceCodeLine = new Integer(sourceLineAnnotation.getStartLine());
+        if(checkDuplicate.contains(sourceCodeLine)) return;
+
         int type = obj.getCatchType();
         if (type == 0) {
             return;
@@ -50,13 +60,13 @@ public class ImproperCheckForExceptionalConditionsDetector extends PreorderVisit
 
         if ("java.lang.NullPointerException".equals(name)) {
             bugReporter.reportBug(new BugInstance(this, "USE_OF_NULL_POINTER_EXCEPTION_CATCH", NORMAL_PRIORITY).addClassAndMethod(this)
-                    .addSourceLine(this.classContext, this, obj.getHandlerPC()));
+                    .addSourceLine(this.classContext, this, sourceCodeLine));
         }
-
-        if ("java.lang.Exception".equals(name)) {
+        else if ("java.lang.Exception".equals(name)) {
             bugReporter.reportBug(new BugInstance(this, "USE_OF_GENERIC_EXCEPTION_CATCH", NORMAL_PRIORITY).addClassAndMethod(this)
-                    .addSourceLine(this.classContext, this, obj.getHandlerPC()));
+                    .addSourceLine(this.classContext, this, sourceCodeLine));
         }
+        checkDuplicate.add(sourceCodeLine);
     }
 
     @Override
