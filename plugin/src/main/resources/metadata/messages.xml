@@ -9,8 +9,43 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Improper Check for Exceptional Conditions Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector">
+        <Details>Detect the improper check for exceptional conditions.
+        </Details>
+    </Detector>
 
-    <!-- Leftover Debug Code (LDC) -->
+    <BugPattern type="USE_OF_NULL_POINTER_EXCEPTION_CATCH">
+        <ShortDescription>This code mistakenly catches a NullPointerException. </ShortDescription>
+        <LongDescription>Catching NullPointerException should not be used as an alternative to programmatic checks to prevent dereferencing a null pointer.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>Programmers typically catch NullPointerException under three circumstances:</p>
+<ul>
+<li>The program contains a null pointer dereference. Catching the resulting exception was easier than fixing the underlying problem.</li>
+<li>The program explicitly throws a NullPointerException to signal an error condition.</li>
+<li>The code is part of a test harness that supplies unexpected input to the classes under test.</li>
+</ul>
+<p>Of these three circumstances, only the last is acceptable.</p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <BugPattern type="USE_OF_GENERIC_EXCEPTION_CATCH">
+        <ShortDescription>Catching overly broad exceptions.</ShortDescription>
+        <LongDescription>Catching overly broad exceptions complex error handling code that is more likely to contains security vulnerabilities.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>Multiple catch blocks can get ugly and repetitive, but "condensing" catch blocks
+by catching a high-level class like Exception can obscure exceptions that deserve special treatment or that should not be caught at this point in the program.
+Catching an overly broad exception essentially defeats the purpose of Java's typed exceptions,
+and can become particularly dangerous if the program grows and begins to throw new types of exceptions.
+The new exception types will not receive any attention.</p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <!-- Debug Code Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector">
         <Details>Detect the leftover debug code.
         </Details>

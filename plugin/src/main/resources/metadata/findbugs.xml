@@ -125,7 +125,10 @@
     <Detector class="com.h3xstream.findsecbugs.kotlin.KotlinHardcodePasswordInMapDetector" reports="HARD_CODE_PASSWORD"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector" reports="LEFTOVER_DEBUG_CODE"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector" reports="INFO_EXPOSURE_BY_COMMENTS_SERVLET"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector" reports="USE_OF_NULL_POINTER_EXCEPTION_CATCH, USE_OF_GENERIC_EXCEPTION_CATCH"/>
 
+    <BugPattern type="USE_OF_NULL_POINTER_EXCEPTION_CATCH" abbrev="SECUNEC" category="SECURITY"/>
+    <BugPattern type="USE_OF_GENERIC_EXCEPTION_CATCH" abbrev="SECUGEC" category="SECURITY"/>
     <BugPattern type="INFO_EXPOSURE_BY_COMMENTS_SERVLET" abbrev="SECIEBC" category="SECURITY"/>
     <BugPattern type="ERROR_CONDITION_WITHOUT_ACTION" abbrev="SECECWA" category="SECURITY"/>
     <BugPattern type="LEFTOVER_DEBUG_CODE" abbrev="SECLDC" category="SECURITY"/>
