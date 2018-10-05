@@ -9,6 +9,34 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Use of Deprecated API Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector">
+        <Details>Detect the usage of deprecated API.
+        </Details>
+    </Detector>
+
+    <BugPattern type="DEPRECATED_API_RUNTIME_EXIT">
+        <ShortDescription>Do not use Runtime.exit() method in J2EE program.</ShortDescription>
+        <LongDescription>Invoking Runtime.exit() method could terminate a container that execute Web Application.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> The program invokes a potentially dangerous function that could introduce a vulnerability if it is used incorrectly, but the function can also be used safely.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <BugPattern type="DEPRECATED_API_SYSTEM_EXIT">
+        <ShortDescription>Do not use System.exit() method in J2EE program.</ShortDescription>
+        <LongDescription>Invoking System.exit() method could terminate a container that execute Web Application.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> The program invokes a potentially dangerous function that could introduce a vulnerability if it is used incorrectly, but the function can also be used safely.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+
     <!-- Info Leak Error Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoLeakErrorDetector">
         <Details>Detect the information leakage error.
