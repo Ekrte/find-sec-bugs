@@ -17,25 +17,22 @@
  */
 package com.h3xstream.findsecbugs.injection;
 
+import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import com.h3xstream.findsecbugs.taintanalysis.TaintDataflow;
 import com.h3xstream.findsecbugs.taintanalysis.TaintFrame;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Detector;
-import edu.umd.cs.findbugs.ba.CFGBuilderException;
-import edu.umd.cs.findbugs.ba.ClassContext;
-import edu.umd.cs.findbugs.ba.DataflowAnalysisException;
-import edu.umd.cs.findbugs.ba.Location;
+import edu.umd.cs.findbugs.ba.*;
 import edu.umd.cs.findbugs.bcel.BCELUtil;
 import edu.umd.cs.findbugs.classfile.CheckedAnalysisException;
 import edu.umd.cs.findbugs.classfile.Global;
 import edu.umd.cs.findbugs.classfile.MethodDescriptor;
+
 import java.util.Iterator;
+
+import org.apache.bcel.Const;
 import org.apache.bcel.classfile.Method;
-import org.apache.bcel.generic.ConstantPoolGen;
-import org.apache.bcel.generic.Instruction;
-import org.apache.bcel.generic.InstructionHandle;
-import org.apache.bcel.generic.InvokeInstruction;
-import org.apache.bcel.generic.MethodGen;
+import org.apache.bcel.generic.*;
 
 /**
  * Detector designed for extension to allow usage of taint analysis
@@ -45,7 +42,8 @@ import org.apache.bcel.generic.MethodGen;
 public abstract class AbstractTaintDetector implements Detector {
     
     protected final BugReporter bugReporter;
-    
+    public boolean enableIntegerOverflow = false;
+
     protected AbstractTaintDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
     }
@@ -62,6 +60,8 @@ public abstract class AbstractTaintDetector implements Detector {
     public boolean shouldAnalyzeClass(ClassContext classContext) {
         return true;
     }
+
+    public void setEnableIntegerOverflow() { enableIntegerOverflow = true; }
     
     @Override
     public void visitClassContext(ClassContext classContext) {
@@ -95,6 +95,13 @@ public abstract class AbstractTaintDetector implements Detector {
             Location location = i.next();
             InstructionHandle handle = location.getHandle();
             Instruction instruction = handle.getInstruction();
+
+            if(enableIntegerOverflow && instruction instanceof IADD) {
+                TaintFrame fact = dataflow.getFactAtLocation(location);
+                analyzeIntegerOverflow(classContext, method, handle, cpg, fact);
+                continue;
+            }
+
             if (!(instruction instanceof InvokeInstruction)) {
                 continue;
             }
@@ -136,5 +143,9 @@ public abstract class AbstractTaintDetector implements Detector {
     
     abstract protected void analyzeLocation(ClassContext classContext, Method method, InstructionHandle handle,
             ConstantPoolGen cpg, InvokeInstruction invoke, TaintFrame fact, String currentMethod)
+            throws DataflowAnalysisException;
+
+    abstract protected void analyzeIntegerOverflow(ClassContext classContext, Method method, InstructionHandle handle,
+            ConstantPoolGen cpg, TaintFrame fact)
             throws DataflowAnalysisException;
 }

@@ -9,6 +9,26 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Integer Overflow Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.IntegerOverflowDetector">
+        <Details>Detect integer overflow.
+        </Details>
+    </Detector>
+
+    <BugPattern type="INTEGER_OVERFLOW">
+        <ShortDescription>The software performs a calculation that can produce an integer overflow or wraparound.</ShortDescription>
+        <LongDescription>The software performs a calculation that can produce an integer overflow or wraparound, when the logic assumes that the resulting value will always be larger than the original value. This can introduce other weaknesses when the calculation is used for resource management or execution control.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation.
+When this occurs, the value may wrap to become a very small or negative number.
+While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+
+
     <!-- Use of Deprecated API Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector">
         <Details>Detect the usage of deprecated API.

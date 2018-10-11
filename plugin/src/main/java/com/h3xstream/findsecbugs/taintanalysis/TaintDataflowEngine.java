@@ -72,6 +72,7 @@ public class TaintDataflowEngine implements IMethodAnalysisEngine<TaintDataflow>
         "sonarqube.txt",
         "struts2-taint.txt",
         "wicket.txt",
+        "integer-overflow.txt",
     };
     private static final String SAFE_ENCODERS_PATH = "safe-encoders/";
     private static final String[] SAFE_ENCODERS_FILENAMES = {

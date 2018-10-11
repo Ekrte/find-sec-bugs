@@ -19,6 +19,7 @@ package com.h3xstream.findsecbugs.injection;
 
 import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import com.h3xstream.findsecbugs.taintanalysis.TaintFrame;
+import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Priorities;
 import edu.umd.cs.findbugs.SourceLineAnnotation;
@@ -26,11 +27,9 @@ import edu.umd.cs.findbugs.ba.AnalysisContext;
 import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.ba.DataflowAnalysisException;
 import edu.umd.cs.findbugs.util.ClassName;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
+
 import org.apache.bcel.Repository;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
@@ -44,7 +43,7 @@ import org.apache.bcel.generic.InvokeInstruction;
  * @author David Formanek (Y Soft Corporation, a.s.)
  */
 public abstract class AbstractInjectionDetector extends AbstractTaintDetector {
-    
+
     protected final Map<String, Set<InjectionSink>> injectionSinks = new HashMap<String, Set<InjectionSink>>();
     private final Map<MethodAndSink, Taint> sinkTaints = new HashMap<MethodAndSink, Taint>();
     
@@ -103,6 +102,28 @@ public abstract class AbstractInjectionDetector extends AbstractTaintDetector {
                 // sink cannot be influenced by other methods calls, so report it immediately
                 bugReporter.reportBug(injectionSink.generateBugInstance(true));
             }
+            return;
+        }
+    }
+
+    @Override
+    protected void analyzeIntegerOverflow(ClassContext classContext, Method method, InstructionHandle handle,
+    ConstantPoolGen cpg, TaintFrame fact) throws DataflowAnalysisException {
+        SourceLineAnnotation sourceLine = SourceLineAnnotation.fromVisitedInstruction(classContext, method, handle);
+        for (int offset : Arrays.asList(0,1)) {
+            int priority = getPriorityFromTaintFrame(fact, offset);
+            if (priority == Priorities.IGNORE_PRIORITY) {
+                continue;
+            }
+
+            Taint parameterTaint = fact.getStackValue(offset);
+            String injectableMethod = "IADD";
+            InjectionSink injectionSink = new InjectionSink(this, "INTEGER_OVERFLOW", HIGH_PRIORITY,
+                    classContext, method, handle, injectableMethod, 0);
+            injectionSink.addLines(parameterTaint.getAllLocations());
+            injectionSink.addSources(parameterTaint.getSources());
+
+            bugReporter.reportBug(injectionSink.generateBugInstance(true));
             return;
         }
     }
