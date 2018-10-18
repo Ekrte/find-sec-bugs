@@ -41,23 +41,23 @@ public class ErrorConditionWithoutActionDetector extends PreorderVisitor impleme
 
     private BugReporter bugReporter;
     // handlerPC map is consist of <method, List<catch block represented to bytecode order>>
-    Map<String, List<Integer>> handlerPC = new HashMap<>();
+
+    Map<String, List<Integer>> handlerPC;
 
     public ErrorConditionWithoutActionDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
+        handlerPC = new HashMap<>();
     }
 
     @Override
     public void visit(CodeException obj) {
         int type = obj.getCatchType();
         // Remove type is zero. Zero means finally block, not catch block.
-        if (type == 0) {
-            return;
-        }
+        if (type == 0) return;
 
         // Accumulate catch block program count for post-analysis.
         int target_inst = obj.getHandlerPC();
-        String methodName = getMethodName();
+        String methodName = getClassName()+"."+getMethodName();
         if (handlerPC.containsKey(methodName)) {
             handlerPC.get(methodName).add(target_inst);
         } else {
@@ -86,7 +86,8 @@ public class ErrorConditionWithoutActionDetector extends PreorderVisitor impleme
 
         CFG cfg = classContext.getCFG(m);
         // Do not need to analyze if there is no exception table.
-        List<Integer> target_inst = handlerPC.get(m.getName());
+
+        List<Integer> target_inst = handlerPC.get(getClassName()+'.'+m.getName());
         if(target_inst == null) return;
 
         Set<Integer> sourceCodeLine = new HashSet<>();
@@ -108,20 +109,29 @@ public class ErrorConditionWithoutActionDetector extends PreorderVisitor impleme
 
             Instruction first_inst = handle.getInstruction();
             Instruction second_inst = handle.getNext().getInstruction();
+
+            boolean reportFlag = false;
             if(sourceCodeLine.contains(position)) {
                 // In general case, a catch block without an action is represented to (astore, aload) pattern.
                 // If the catch block is in the last part of method, it shows (astore, goto end) pattern.
-                if (first_inst instanceof ASTORE &&
-                    (second_inst instanceof ALOAD || second_inst instanceof GOTO)) {
+                if (first_inst instanceof ASTORE && second_inst instanceof ALOAD) {
                     if (handle.getNext().getNext() != null) {
                         Instruction third_inst = handle.getNext().getNext().getInstruction();
                         // If third instruction is ATHROW, it just throwing exception without a other action in catch block.
                         // This is delegating exception handling to other catch block. So, skip this case.
                         // If third instruction is INVOKEVIRTUAL,it call virtual method in catch block.
                         if (third_inst instanceof ATHROW || third_inst instanceof INVOKEVIRTUAL) continue;
+                        reportFlag = true;
                     }
-                    JavaClass javaClass = classContext.getJavaClass();
+                }
 
+                if (first_inst instanceof ASTORE &&
+                        (second_inst instanceof RETURN || second_inst instanceof GOTO)) {
+                    reportFlag = true;
+                }
+
+                if(reportFlag) {
+                    JavaClass javaClass = classContext.getJavaClass();
                     bugReporter.reportBug(new BugInstance(this, "ERROR_CONDITION_WITHOUT_ACTION", Priorities.NORMAL_PRIORITY) //
                             .addClass(javaClass)
                             .addMethod(javaClass, m)

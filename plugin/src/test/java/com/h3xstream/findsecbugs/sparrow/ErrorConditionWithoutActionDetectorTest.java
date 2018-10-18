@@ -33,7 +33,8 @@ public class ErrorConditionWithoutActionDetectorTest extends BaseDetectorTest {
     public void ErrorConditionWithoutAction() throws Exception {
         //Locate test code
         String[] files = {
-                getClassFilePath("testcode/sparrow/ErrorConditionWithoutAction")
+                getClassFilePath("testcode/sparrow/ErrorConditionWithoutAction"),
+                getClassFilePath("testcode/sparrow/ErrorConditionWithoutAction2"),
         };
 
         //Run the analysis
@@ -41,10 +42,20 @@ public class ErrorConditionWithoutActionDetectorTest extends BaseDetectorTest {
         analyze(files, reporter);
 
         for (Integer line : Arrays.asList(37, 63, 75)) {
+        //for (Integer line : Arrays.asList(44)) {
             verify(reporter).doReportBug(
                     bugDefinition()
                             .bugType("ERROR_CONDITION_WITHOUT_ACTION")
                             .inClass("ErrorConditionWithoutAction").atLine(line)
+                            .build()
+            );
+        }
+
+        for (Integer line : Arrays.asList(44)) {
+            verify(reporter).doReportBug(
+                    bugDefinition()
+                            .bugType("ERROR_CONDITION_WITHOUT_ACTION")
+                            .inClass("ErrorConditionWithoutAction2").atLine(line)
                             .build()
             );
         }

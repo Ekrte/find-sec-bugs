@@ -15,7 +15,6 @@
     * Not all bug patterns are direct vulnerabilities. For example, the identification of Struts/Spring/Rest/SOAP endpoints.
     -->
 
-    <Detector class="com.h3xstream.findsecbugs.sparrow.ErrorConditionWithoutActionDetector" reports="ERROR_CONDITION_WITHOUT_ACTION"/>
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector" reports="PREDICTABLE_RANDOM,PREDICTABLE_RANDOM_SCALA"/>
     <Detector class="com.h3xstream.findsecbugs.endpoint.ServletEndpointDetector"
               reports="SERVLET_PARAMETER,SERVLET_CONTENT_TYPE,SERVLET_SERVER_NAME,SERVLET_SESSION_ID,SERVLET_QUERY_STRING,SERVLET_HEADER,SERVLET_HEADER_REFERER,SERVLET_HEADER_USER_AGENT"/>
@@ -123,6 +122,7 @@
     <Detector class="com.h3xstream.findsecbugs.PotentialValueDetector" reports="HARD_CODE_PASSWORD,DES_USAGE,WEAK_MESSAGE_DIGEST_MD5,WEAK_MESSAGE_DIGEST_SHA1"/> <!-- This detector is not reporting any issue -->
     <Detector class="com.h3xstream.findsecbugs.crypto.ErrorMessageExposureDetector" reports="INFORMATION_EXPOSURE_THROUGH_AN_ERROR_MESSAGE"/>
     <Detector class="com.h3xstream.findsecbugs.kotlin.KotlinHardcodePasswordInMapDetector" reports="HARD_CODE_PASSWORD"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.ErrorConditionWithoutActionDetector" reports="ERROR_CONDITION_WITHOUT_ACTION" hidden="true"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector" reports="LEFTOVER_DEBUG_CODE"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector" reports="INFO_EXPOSURE_BY_COMMENTS_SERVLET"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector" reports="USE_OF_NULL_POINTER_EXCEPTION_CATCH, USE_OF_GENERIC_EXCEPTION_CATCH"/>
@@ -130,7 +130,7 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector" reports="DEPRECATED_API_RUNTIME_EXIT, DEPRECATED_API_SYSTEM_EXIT"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.IntegerOverflowDetector" reports="INTEGER_OVERFLOW"/>
 
-    <BugPattern type="INTEGER_OVERFLOW" abbrev="SECIOU" category="SECURITY"/>
+    <BugPattern type="INTEGER_OVERFLOW" abbrev="SECIO" category="SECURITY"/>
     <BugPattern type="DEPRECATED_API_RUNTIME_EXIT" abbrev="SECDARE" category="SECURITY"/>
     <BugPattern type="DEPRECATED_API_SYSTEM_EXIT" abbrev="SECDASE" category="SECURITY"/>
     <BugPattern type="INFO_LEAK_ERROR_PRINT_STACK_TRACE" abbrev="SECILEP" category="SECURITY"/>

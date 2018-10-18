@@ -27,7 +27,7 @@ While this may be intended behavior in circumstances that rely on wrapping, it c
 ]]>
         </Details>
     </BugPattern>
-
+    <BugCode abbrev="SECIO">Integer Overflow</BugCode>
 
     <!-- Use of Deprecated API Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector">
@@ -45,6 +45,7 @@ While this may be intended behavior in circumstances that rely on wrapping, it c
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECDARE">Deprecated API(Runtime Exit)</BugCode>
 
     <BugPattern type="DEPRECATED_API_SYSTEM_EXIT">
         <ShortDescription>Do not use System.exit() method in J2EE program.</ShortDescription>
@@ -56,6 +57,7 @@ While this may be intended behavior in circumstances that rely on wrapping, it c
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECDASE">Deprecated API(System Exit)</BugCode>
 
     <!-- Info Leak Error Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoLeakErrorDetector">
@@ -78,7 +80,7 @@ which would expose query logic and possibly even passwords or other sensitive in
 ]]>
         </Details>
     </BugPattern>
-
+    <BugCode abbrev="SECILEP">Information Leakage error printStackTrace</BugCode>
 
     <!-- Improper Check for Exceptional Conditions Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector">
@@ -101,6 +103,7 @@ which would expose query logic and possibly even passwords or other sensitive in
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECUNEC">Use of Null Pointer Exception Catch</BugCode>
 
     <BugPattern type="USE_OF_GENERIC_EXCEPTION_CATCH">
         <ShortDescription>Catching overly broad exceptions.</ShortDescription>
@@ -115,6 +118,7 @@ The new exception types will not receive any attention.</p>
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECUGEC">Use of Generic Exception Catch</BugCode>
 
     <!-- Debug Code Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector">
@@ -136,6 +140,7 @@ The new exception types will not receive any attention.</p>
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECLDC">Leftover Debug Code</BugCode>
 
     <!-- ERROR_CONDITION_WITHOUT_ACTION (ECWA) -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.ErrorConditionWithoutActionDetector">
@@ -166,7 +171,7 @@ In a below example, there is no exception handling even if exception is caught i
 ]]>
         </Details>
     </BugPattern>
-
+    <BugCode abbrev="SECECWA">Error condition without action</BugCode>
 
     <!-- INFO_EXPOSURE_BY_COMMENTS (IEBC) -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector">
@@ -201,6 +206,7 @@ anyone who has permission to access source code could easily break into system.<
 ]]>
         </Details>
     </BugPattern>
+    <BugCode abbrev="SECIEBC">Information Exposure By Comments(Servlet)</BugCode>
 
     <!-- Predictable Pseudo Random Generator (PRG) -->
     <Detector class="com.h3xstream.findsecbugs.PredictableRandomDetector">
