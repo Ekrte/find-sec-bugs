@@ -1,2 +1,0 @@
-java/net/URLConnection.getInputStream()Ljava/io/InputStream;:TAINTED
-java/lang/Integer.parseInt(Ljava/lang/String;)I:0

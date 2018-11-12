@@ -111,6 +111,10 @@ public class Taint {
         HASH_VARIABLE;
     }
 
+    public enum Comment {
+        CUSTOM_COMMAND_INJECTION;
+    }
+
     private State state;
     private static final int INVALID_INDEX = -1;
     private int variableIndex;
@@ -121,6 +125,7 @@ public class Taint {
     private ObjectType realInstanceClass;
     private final Set<Tag> tags;
     private final Set<Tag> tagsToRemove;
+    private final Set<Comment> comments;
     private String constantValue;
     private String potentialValue;
     private String debugInfo = null;
@@ -147,6 +152,7 @@ public class Taint {
         this.realInstanceClass = null;
         this.tags = EnumSet.noneOf(Tag.class);
         this.tagsToRemove = EnumSet.noneOf(Tag.class);
+        this.comments = EnumSet.noneOf(Comment.class);
         this.constantValue = null;
         if (FindSecBugsGlobalConfig.getInstance().isDebugTaintState()) {
             this.debugInfo = "?";
@@ -171,6 +177,7 @@ public class Taint {
         this.realInstanceClass = taint.realInstanceClass;
         this.tags = EnumSet.copyOf(taint.tags);
         this.tagsToRemove = EnumSet.copyOf(taint.tagsToRemove);
+        this.comments = EnumSet.copyOf(taint.comments);
         this.constantValue = taint.constantValue;
         this.potentialValue = taint.potentialValue;
         if (FindSecBugsGlobalConfig.getInstance().isDebugTaintState()) {
@@ -451,7 +458,59 @@ public class Taint {
     public Set<Tag> getTagsToRemove() {
         return Collections.unmodifiableSet(tagsToRemove);
     }
-    
+
+    /**
+     * Adds the specified taint comment to this fact or marks this comment to add
+     * if this fact acts like a derivation of taint transfer behaviour
+     *
+     * @param comment comment to add
+     * @return true if this comment was not present before, false otherwise
+     */
+    public boolean addComment(Comment comment) {
+        return comments.add(comment);
+    }
+
+    /**
+     * Checks whether the specified taint comment is present for this fact
+     *
+     * @param comment commentto check
+     * @return true if it is present, false otherwise
+     */
+    public boolean hasComment(Comment comment) {
+        return comments.contains(comment);
+    }
+
+    /**
+     * Checks whether one of the specified taint comment is present for this fact
+     *
+     * @param comments Comments to test
+     * @return true if at least one is present, false otherwise
+     */
+    public boolean hasOneTag(Comment... comments) {
+        for(Comment c : comments) {
+            if (this.comments.contains(c)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there are any taint comments for this fact
+     *
+     * @return true if number of comments is &gt; 0, false otherwise
+     */
+    public boolean hasComments() {
+        return !comments.isEmpty();
+    }
+
+    /**
+     * Returns all present taint comments for this fact
+     *
+     * @return unmodifiable set of all present taint comments
+     */
+    public Set<Comment> getComments() {
+        return Collections.unmodifiableSet(comments);
+    }
+
     /**
      * Returns the constant value of the string or char if known
      * 
@@ -540,6 +599,7 @@ public class Taint {
         }
         mergeRealInstanceClass(a, b, result);
         mergeTags(a, b, result);
+        mergeComments(a, b, result);
         if (a.constantValue != null && a.constantValue.equals(b.constantValue)) {
             result.constantValue = a.constantValue;
         }
@@ -600,6 +660,15 @@ public class Taint {
         }
         result.tagsToRemove.addAll(a.tagsToRemove);
         result.tagsToRemove.addAll(b.tagsToRemove);
+    }
+
+    private static void mergeComments(Taint a, Taint b, Taint result) {
+        if(!a.comments.isEmpty()) {
+            result.comments.addAll(a.comments);
+        }
+        if(!b.comments.isEmpty()) {
+            result.comments.addAll(b.comments);
+        }
     }
 
     @Override
@@ -703,6 +772,9 @@ public class Taint {
         }
         if (tags.size() > 0) {
             sb.append(" tags=").append(Arrays.toString(tags.toArray()));
+        }
+        if (comments.size() > 0) {
+            sb.append(" comments=").append(Arrays.toString(comments.toArray()));
         }
         return sb.toString();
     }

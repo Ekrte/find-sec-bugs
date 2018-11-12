@@ -61,7 +61,7 @@ public class TaintMethodConfig implements TaintTypeConfig {
         String commaSeparatedTaintResultsRegex = "("+resultStateOrStackIndexRegex+",)*"+resultStateOrStackIndexRegex;
 
         String taintTagNameRegex = taintStateNameRegex;
-        String taintTagModificationRegex = "[+-]" + taintTagNameRegex;
+        String taintTagModificationRegex = "[\\+\\-\\*]" + taintTagNameRegex;
 
         String commaSeparatedTaintTagModificationRegex = "("+taintTagModificationRegex+",)*"+taintTagModificationRegex;
         String commaSeparatedStackMutationIndexesRegex = "("+stackIndexRegex+",)*" + stackIndexRegex;
@@ -262,6 +262,19 @@ public class TaintMethodConfig implements TaintTypeConfig {
                 sb.append(tag.name());
             }
         }
+        if (outputTaint.hasComments()) {
+            sb.append(',');
+            boolean isFirst = true;
+            for (Taint.Comment comment : outputTaint.getComments()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    sb.append(',');
+                }
+                sb.append('*');
+                sb.append(comment.name());
+            }
+        }
         if (hasMutableStackIndices()) {
             sb.append("#");
             appendJoined(sb, mutableStackIndices);
@@ -358,7 +371,7 @@ public class TaintMethodConfig implements TaintTypeConfig {
         }
         loadStatesAndParameters(taintConfig);
         if (tuple.length == 2) {
-            loadTags(tuple[1]);
+            loadTagsAndComments(tuple[1]);
         }
         return this;
     }
@@ -406,29 +419,38 @@ public class TaintMethodConfig implements TaintTypeConfig {
         }
     }
 
-    private void loadTags(String tagInfo) throws IOException {
-        if (tagInfo.isEmpty()) {
-            throw new IOException("No taint tags specified");
+    private void loadTagsAndComments(String extraInfo) throws IOException {
+        if (extraInfo.isEmpty()) {
+            throw new IOException("No taint tags and comments specified");
         }
-        for (String tagName : tagInfo.split(",")) {
-            char sign = tagName.charAt(0);
-            tagName = tagName.substring(1);
-            if (!isTaintTagValue(tagName)) {
-                throw new IOException("Bad format: unknown taint tag " + tagName);
-            }
-            Taint.Tag tag = Taint.Tag.valueOf(tagName);
-            if (outputTaint.hasTag(tag) || outputTaint.getTagsToRemove().contains(tag)) {
-                throw new IOException("Bad format: tag " + tag + " already present");
-            }
+        for (String extraName : extraInfo.split(",")) {
+            char sign = extraName.charAt(0);
+            extraName = extraName.substring(1);
             switch (sign) {
                 case '+':
-                    outputTaint.addTag(tag);
-                    break;
                 case '-':
-                    outputTaint.removeTag(tag);
+                    if (!isTaintTagValue(extraName)) {
+                        throw new IOException("Bad format: unknown taint tag " + extraName);
+                    }
+                    Taint.Tag tag = Taint.Tag.valueOf(extraName);
+                    if (outputTaint.hasTag(tag) || outputTaint.getTagsToRemove().contains(tag)) {
+                        throw new IOException("Bad format: tag " + tag + " already present");
+                    }
+                    if (sign == '+') outputTaint.addTag(tag);
+                    else if (sign == '-') outputTaint.removeTag(tag);
+                    break;
+                case '*':
+                    if (!isTaintCommentValue(extraName)) {
+                        throw new IOException("Bad format: unknown taint comment " + extraName);
+                    }
+                    Taint.Comment comment = Taint.Comment.valueOf(extraName);
+                    if (outputTaint.hasComment(comment)) {
+                        throw new IOException("Bad format: comment " + comment+ " already present");
+                    }
+                    outputTaint.addComment(comment);
                     break;
                 default:
-                    throw new IOException("Bad format: taint tag sign must be + or - but is " + sign);
+                    throw new IOException("Bad format: taint tag or comments sign must be + or - or * but is " + sign);
             }
         }
     }
@@ -437,6 +459,16 @@ public class TaintMethodConfig implements TaintTypeConfig {
         assert value != null && !value.isEmpty();
         for (Taint.Tag tag : Taint.Tag.values()) {
             if (tag.name().equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTaintCommentValue(String value) {
+        assert value != null && !value.isEmpty();
+        for (Taint.Comment comment : Taint.Comment.values()) {
+            if (comment.name().equals(value)) {
                 return true;
             }
         }

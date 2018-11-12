@@ -601,7 +601,7 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
         Taint taint = methodConfig.getOutputTaint();
         assert taint != null;
         assert taint != methodConfig.getOutputTaint() : "defensive copy not made";
-        Taint taintCopy = new Taint(taint); 
+        Taint taintCopy = new Taint(taint);
         if (taint.isUnknown() && taint.hasParameters()) {
             Taint merge = mergeTransferParameters(taint.getParameters());
             assert merge != null;
@@ -615,6 +615,11 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
         if (!taint.isSafe() && taintCopy.hasTags()) {
             for (Taint.Tag tag : taintCopy.getTags()) {
                 taint.addTag(tag);
+            }
+        }
+        if (taintCopy.hasComments()) {
+            for (Taint.Comment comment : taintCopy.getComments()) {
+                taint.addComment(comment);
             }
         }
         if (taintCopy.isRemovingTags()) {

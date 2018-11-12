@@ -72,7 +72,6 @@ public class TaintDataflowEngine implements IMethodAnalysisEngine<TaintDataflow>
         "sonarqube.txt",
         "struts2-taint.txt",
         "wicket.txt",
-        "integer-overflow.txt",
     };
     private static final String SAFE_ENCODERS_PATH = "safe-encoders/";
     private static final String[] SAFE_ENCODERS_FILENAMES = {
@@ -114,6 +113,7 @@ public class TaintDataflowEngine implements IMethodAnalysisEngine<TaintDataflow>
 
         // Override the sensitive data taints
         loadTaintConfig(TAINT_CONFIG_PATH.concat("taint-sensitive-data.txt"), false);
+        loadTaintConfig(TAINT_CONFIG_PATH.concat("custom.txt"), false);
 
         if (CONFIG.isTaintedSystemVariables()) {
             loadTaintConfig(TAINT_CONFIG_PATH.concat("tainted-system-variables.txt"), false);
