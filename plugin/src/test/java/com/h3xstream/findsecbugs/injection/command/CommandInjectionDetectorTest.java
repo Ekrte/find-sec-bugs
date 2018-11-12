@@ -34,7 +34,8 @@ public class CommandInjectionDetectorTest extends BaseDetectorTest {
         String[] files = {
                 getClassFilePath("testcode/command/CommandInjection"),
                 getClassFilePath("testcode/command/MoreMethods"),
-                getClassFilePath("testcode/command/SubClass")
+                getClassFilePath("testcode/command/SubClass"),
+                getClassFilePath("testcode/command/CustomCommandInjection")
         };
 
         //Run the analysis
@@ -48,7 +49,7 @@ public class CommandInjectionDetectorTest extends BaseDetectorTest {
                 21, 22, 23, 24, 25, 26, 29, 32, 73, 77, 89, 101, 111, 116, 125, 134, 140, 161
         );
         //List<Integer> linesLow = Arrays.asList(57, 81, 121, 126, 136, 142);
-        
+
         //Assertions
         for (Integer line : linesMedium) {
             verify(reporter).doReportBug(
@@ -59,7 +60,7 @@ public class CommandInjectionDetectorTest extends BaseDetectorTest {
                             .build()
             );
         }
-        
+
         for (Integer line : linesHigh) {
             verify(reporter).doReportBug(
                     bugDefinition()
@@ -79,57 +80,65 @@ public class CommandInjectionDetectorTest extends BaseDetectorTest {
                             .build()
             );
         }*/
-        
+
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("MoreMethods").atLine(16)
-                .withPriority("High")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("MoreMethods").atLine(16)
+                        .withPriority("High")
+                        .build()
         );
-        
+
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("MoreMethods").atLine(21)
-                .withPriority("High")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("MoreMethods").atLine(21)
+                        .withPriority("High")
+                        .build()
         );
-        
+
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("MoreMethods").atLine(25)
-                .withPriority("High")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("MoreMethods").atLine(25)
+                        .withPriority("High")
+                        .build()
         );
-        
+
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("SubClass").atLine(9)
-                .withPriority("High")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("SubClass").atLine(9)
+                        .withPriority("High")
+                        .build()
         );
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("SubClass").atLine(10)
-                .withPriority("High")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("SubClass").atLine(10)
+                        .withPriority("High")
+                        .build()
         );
-        
+
         verify(reporter).doReportBug(
-            bugDefinition()
-                .bugType("COMMAND_INJECTION")
-                .inClass("CommandInjection").atLine(170)
-                .withPriority("Low")
-                .build()
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("CommandInjection").atLine(170)
+                        .withPriority("Low")
+                        .build()
         );
-        
+
+        verify(reporter).doReportBug(
+                bugDefinition()
+                        .bugType("COMMAND_INJECTION")
+                        .inClass("CustomCommandInjection").atLine(11)
+                        .withPriority("High")
+                        .build()
+        );
+
         verify(reporter, times(linesMedium.size())).doReportBug(
                 bugDefinition().bugType("COMMAND_INJECTION").withPriority("Medium").build());
-        verify(reporter, times(linesHigh.size() + 5)).doReportBug(
+        verify(reporter, times(linesHigh.size() + 6)).doReportBug(
                 bugDefinition().bugType("COMMAND_INJECTION").withPriority("High").build());
         verify(reporter, times(1)).doReportBug(
                 bugDefinition().bugType("COMMAND_INJECTION").withPriority("Low").build());
