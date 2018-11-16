@@ -126,7 +126,6 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.DebugCodeDetector" reports="LEFTOVER_DEBUG_CODE"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InfoExposureByCommentsDetector" reports="INFO_EXPOSURE_BY_COMMENTS_SERVLET"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector" reports="USE_OF_NULL_POINTER_EXCEPTION_CATCH, USE_OF_GENERIC_EXCEPTION_CATCH"/>
-    <Detector class="com.h3xstream.findsecbugs.sparrow.InfoLeakErrorDetector" reports="INFO_LEAK_ERROR_PRINT_STACK_TRACE"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector" reports="DEPRECATED_API_RUNTIME_EXIT, DEPRECATED_API_SYSTEM_EXIT"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.IntegerOverflowDetector" reports="INTEGER_OVERFLOW"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.UnsaltedOneWayHashDetector" reports="UNSALTED_ONE_WAY_HASH"/>
@@ -135,7 +134,6 @@
     <BugPattern type="INTEGER_OVERFLOW" abbrev="SECIO" category="SECURITY"/>
     <BugPattern type="DEPRECATED_API_RUNTIME_EXIT" abbrev="SECDARE" category="SECURITY"/>
     <BugPattern type="DEPRECATED_API_SYSTEM_EXIT" abbrev="SECDASE" category="SECURITY"/>
-    <BugPattern type="INFO_LEAK_ERROR_PRINT_STACK_TRACE" abbrev="SECILEP" category="SECURITY"/>
     <BugPattern type="USE_OF_NULL_POINTER_EXCEPTION_CATCH" abbrev="SECUNEC" category="SECURITY"/>
     <BugPattern type="USE_OF_GENERIC_EXCEPTION_CATCH" abbrev="SECUGEC" category="SECURITY"/>
     <BugPattern type="INFO_EXPOSURE_BY_COMMENTS_SERVLET" abbrev="SECIEBC" category="SECURITY"/>

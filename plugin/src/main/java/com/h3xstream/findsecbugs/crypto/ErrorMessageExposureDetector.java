@@ -85,6 +85,7 @@ public class ErrorMessageExposureDetector extends OpcodeStackDetector {
             case "java/security/acl/NotOwnerException":
             case "java/lang/OutOfMemoryError":
             case "java/lang/StackOverflowError":
+            case "java/lang/UnsupportedOperationException":
                 return true;
             default:
                 return false;

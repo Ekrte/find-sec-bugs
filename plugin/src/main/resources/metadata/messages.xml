@@ -84,29 +84,6 @@ While this may be intended behavior in circumstances that rely on wrapping, it c
     </BugPattern>
     <BugCode abbrev="SECDASE">Deprecated API(System Exit)</BugCode>
 
-    <!-- Info Leak Error Detector -->
-    <Detector class="com.h3xstream.findsecbugs.sparrow.InfoLeakErrorDetector">
-        <Details>Detect the information leakage error.
-        </Details>
-    </Detector>
-
-    <BugPattern type="INFO_LEAK_ERROR_PRINT_STACK_TRACE">
-        <ShortDescription>The software generates an error message that includes sensitive information about its environment, users, or associated data.</ShortDescription>
-        <LongDescription>The sensitive information may be valuable information on its own (such as password), or it may be useful launching, other, mor deadly attacks</LongDescription>
-        <Details>
-            <![CDATA[
-<p>The sensitive information may be valuable information on its own (such as password), or it may be useful launching, other, mor deadly attacks.
-If an attack fails, an attacker may use error information provided by the server to launch another more focused attack.
-For example, an attempt to exploit a path traversal weakness (CWE-22) might yield the full pathname of the installed application.
-In turn, this could be used to select the proper number of ".." sequences to navigate to the targeted file.
-An attack using SQL injection (CWE-89) might not initially succeed, but an error message could reveal the malformed query,
-which would expose query logic and possibly even passwords or other sensitive information used within the query.
-</p>
-]]>
-        </Details>
-    </BugPattern>
-    <BugCode abbrev="SECILEP">Information Leakage error printStackTrace</BugCode>
-
     <!-- Improper Check for Exceptional Conditions Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.ImproperCheckForExceptionalConditionsDetector">
         <Details>Detect the improper check for exceptional conditions.
