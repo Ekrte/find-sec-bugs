@@ -9,6 +9,31 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Unsalted One-way Hash Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.UnsaltedOneWayHashDetector">
+        <Details>Detect unsalted one way hash.
+        </Details>
+    </Detector>
+
+    <BugPattern type="UNSALTED_ONE_WAY_HASH">
+        <ShortDescription>The software does not use a salt as part of the input.</ShortDescription>
+        <LongDescription>The software uses a one-way cryptographic hash against an input that should not be reversible, such as password, but the software does not also use a salt as part of the input.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> This makes it easier for attackers to pre-compute the hash value using dictionary attack techniques such as rainbow tables.
+It should be noted that, despite common perceptions, the use of a good salt with a hash does not sufficiently increase the effort for an attacker who is targeting an individual password,
+or who has a large amount of computing resources available, such as with cloud-based services or specialized, inexpensive hardware.
+Offline password cracking can still be effective if the hash function is not expensive to compute;
+many cryptographic functions are designed to be efficient and can be vulnerable to attacks using massive computing resources,
+even if the hash is cryptographically strong. The use of a salt only slightly increases the computing requirements for an attacker compared to other strategies such as adaptive hash functions.
+See CWE-916 for more details.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECUH">Unsalted one way hash</BugCode>
+
+
     <!-- Integer Overflow Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.IntegerOverflowDetector">
         <Details>Detect integer overflow.
