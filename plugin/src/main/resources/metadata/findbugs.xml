@@ -129,7 +129,9 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.UseOfDeprecatedApiDetector" reports="DEPRECATED_API_RUNTIME_EXIT, DEPRECATED_API_SYSTEM_EXIT"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.IntegerOverflowDetector" reports="INTEGER_OVERFLOW"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.UnsaltedOneWayHashDetector" reports="UNSALTED_ONE_WAY_HASH"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InappropriateAuthorizationDetector" reports="INAPPROPRIATE_AUTHORIZATION"/>
 
+    <BugPattern type="INAPPROPRIATE_AUTHORIZATION" abbrev="SECIA" category="SECURITY"/>
     <BugPattern type="UNSALTED_ONE_WAY_HASH" abbrev="SECUH" category="SECURITY"/>
     <BugPattern type="INTEGER_OVERFLOW" abbrev="SECIO" category="SECURITY"/>
     <BugPattern type="DEPRECATED_API_RUNTIME_EXIT" abbrev="SECDARE" category="SECURITY"/>

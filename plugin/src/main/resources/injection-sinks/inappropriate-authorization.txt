@@ -1,0 +1,1 @@
+testcasesupport/IO.writeString(Ljava/lang/String;)V:0

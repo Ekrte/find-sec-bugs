@@ -9,6 +9,24 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Inappropriate Authorization Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InappropriateAuthorizationDetector">
+        <Details>Detect inappropriate authorization.
+        </Details>
+    </Detector>
+
+    <BugPattern type="INAPPROPRIATE_AUTHORIZATION">
+        <ShortDescription>The software does not use a untrusted credentials as part of security decision.</ShortDescription>
+        <LongDescription>Configuring an ASP.NET application to run with impersonated credentials may give the application unnecessary privileges.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> The use of impersonated credentials allows an ASP.NET application to run with either the privileges of the client on whose behalf it is executing or with arbitrary privileges granted in its configuration.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECIA">Inappropriate Authorization</BugCode>
+
     <!-- Unsalted One-way Hash Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.UnsaltedOneWayHashDetector">
         <Details>Detect unsalted one way hash.

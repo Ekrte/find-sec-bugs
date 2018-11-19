@@ -42,6 +42,7 @@ public class BaseConfigValidation {
     public void validateClass(String className, String origfileName) {
         if(classesDeprecatedInJava8.contains(className)) return;
         if(classesDeprecatedInJava9.contains(className)) return;
+        if("testcasesupport.IO".contains(className)) return;
 
         if(className.endsWith("$")) return; //Skipping Scala class
         if(className.startsWith("play.")) return; //Temporary skip Play

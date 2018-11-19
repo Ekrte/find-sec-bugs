@@ -71,7 +71,6 @@ public class UnsaltedOneWayHashDetector implements Detector {
 
         for (Iterator<Location> i = cfg.locationIterator(); i.hasNext(); ) {
             Location loc = i.next();
-            String VariableName = null;
             Instruction inst = loc.getHandle().getInstruction();
             if(SALT_UPDATE.matches(inst, cpg)) {
                 useSalt.put(classContext.getFullyQualifiedMethodName(m), true);
