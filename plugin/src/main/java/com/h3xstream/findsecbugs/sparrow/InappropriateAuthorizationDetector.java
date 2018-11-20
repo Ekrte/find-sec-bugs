@@ -18,11 +18,22 @@
 package com.h3xstream.findsecbugs.sparrow;
 
 import com.h3xstream.findsecbugs.injection.BasicInjectionDetector;
+import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import edu.umd.cs.findbugs.BugReporter;
+import edu.umd.cs.findbugs.Priorities;
 
 public class InappropriateAuthorizationDetector extends BasicInjectionDetector {
     public InappropriateAuthorizationDetector(BugReporter bugReporter) {
         super(bugReporter);
         loadConfiguredSinks("inappropriate-authorization.txt", "INAPPROPRIATE_AUTHORIZATION");
+    }
+
+    @Override
+    protected int getPriority(Taint taint) {
+        if (!taint.hasTag(Taint.Tag.INAPP_AUTHORIZATION)) {
+            return Priorities.IGNORE_PRIORITY;
+        } else {
+            return Priorities.HIGH_PRIORITY;
+        }
     }
 }

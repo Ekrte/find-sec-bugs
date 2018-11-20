@@ -1,1 +1,2 @@
 testcasesupport/IO.writeString(Ljava/lang/String;)V:0
+testcode/sparrow/CustomAPI.CriticalFunction(Ljava/lang/String;)V:0

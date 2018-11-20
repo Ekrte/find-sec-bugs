@@ -77,7 +77,8 @@ public class TaintDataflowEngine implements IMethodAnalysisEngine<TaintDataflow>
     private static final String[] SAFE_ENCODERS_FILENAMES = {
         "owasp.txt",
         "apache-commons.txt",
-        "other.txt"
+        "other.txt",
+        "sanitizer.txt",
     };
     private final TaintConfig taintConfig = new TaintConfig();
     protected static Writer writer = null;

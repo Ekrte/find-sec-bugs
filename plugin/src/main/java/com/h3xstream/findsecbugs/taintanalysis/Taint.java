@@ -108,7 +108,8 @@ public class Taint {
 
         CREDIT_CARD_VARIABLE,
         PASSWORD_VARIABLE,
-        HASH_VARIABLE;
+        HASH_VARIABLE,
+        INAPP_AUTHORIZATION;
     }
 
     public enum Comment {

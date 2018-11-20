@@ -3,7 +3,7 @@ javax/servlet/ServletRequest.getCharacterEncoding()Ljava/lang/String;:SAFE
 javax/servlet/ServletRequest.getContentType()Ljava/lang/String;:TAINTED
 javax/servlet/ServletRequest.getLocalAddr()Ljava/lang/String;:TAINTED
 javax/servlet/ServletRequest.getLocalName()Ljava/lang/String;:TAINTED
-javax/servlet/ServletRequest.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED
+javax/servlet/ServletRequest.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED|+INAPP_AUTHORIZATION
 javax/servlet/ServletRequest.getParameterMap()Ljava/util/Map;:TAINTED
 javax/servlet/ServletRequest.getParameterNames()Ljava/util/Enumeration;:TAINTED
 javax/servlet/ServletRequest.getParameterValues(Ljava/lang/String;)[Ljava/lang/String;:TAINTED
@@ -29,7 +29,7 @@ javax/servlet/http/HttpServletRequest.getHeaders(Ljava/lang/String;)Ljava/util/E
 javax/servlet/http/HttpServletRequest.getLocalAddr()Ljava/lang/String;:TAINTED
 javax/servlet/http/HttpServletRequest.getLocalName()Ljava/lang/String;:TAINTED
 javax/servlet/http/HttpServletRequest.getMethod()Ljava/lang/String;:SAFE
-javax/servlet/http/HttpServletRequest.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED
+javax/servlet/http/HttpServletRequest.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED|+INAPP_AUTHORIZATION
 javax/servlet/http/HttpServletRequest.getParameterMap()Ljava/util/Map;:TAINTED
 javax/servlet/http/HttpServletRequest.getParameterNames()Ljava/util/Enumeration;:TAINTED
 javax/servlet/http/HttpServletRequest.getParameterValues(Ljava/lang/String;)[Ljava/lang/String;:TAINTED
@@ -61,7 +61,7 @@ javax/servlet/http/HttpServletRequestWrapper.getHeaders(Ljava/lang/String;)Ljava
 javax/servlet/http/HttpServletRequestWrapper.getLocalAddr()Ljava/lang/String;:SAFE
 javax/servlet/http/HttpServletRequestWrapper.getLocalName()Ljava/lang/String;:TAINTED
 javax/servlet/http/HttpServletRequestWrapper.getMethod()Ljava/lang/String;:SAFE
-javax/servlet/http/HttpServletRequestWrapper.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED
+javax/servlet/http/HttpServletRequestWrapper.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED|+INAPP_AUTHORIZATION
 javax/servlet/http/HttpServletRequestWrapper.getParameterMap()Ljava/util/Map;:TAINTED
 javax/servlet/http/HttpServletRequestWrapper.getParameterNames()Ljava/util/Enumeration;:TAINTED
 javax/servlet/http/HttpServletRequestWrapper.getParameterValues(Ljava/lang/String;)[Ljava/lang/String;:TAINTED
@@ -85,7 +85,7 @@ javax/servlet/ServletRequestWrapper.getCharacterEncoding()Ljava/lang/String;:SAF
 javax/servlet/ServletRequestWrapper.getContentType()Ljava/lang/String;:TAINTED
 javax/servlet/ServletRequestWrapper.getLocalAddr()Ljava/lang/String;:SAFE
 javax/servlet/ServletRequestWrapper.getLocalName()Ljava/lang/String;:TAINTED
-javax/servlet/ServletRequestWrapper.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED
+javax/servlet/ServletRequestWrapper.getParameter(Ljava/lang/String;)Ljava/lang/String;:TAINTED|+INAPP_AUTHORIZATION
 javax/servlet/ServletRequestWrapper.getParameterMap()Ljava/util/Map;:TAINTED
 javax/servlet/ServletRequestWrapper.getParameterNames()Ljava/util/Enumeration;:TAINTED
 javax/servlet/ServletRequestWrapper.getParameterValues(Ljava/lang/String;)[Ljava/lang/String;:TAINTED

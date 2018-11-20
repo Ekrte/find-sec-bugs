@@ -31,7 +31,8 @@ public class InappropriateAuthorizationDetectorTest extends BaseDetectorTest {
     public void InappropriateAuthorization() throws Exception {
         //Locate test code
         String[] files = {
-                getClassFilePath("bytecode_samples/CWE566_Authorization_Bypass_Through_SQL_Primary__Servlet_01.class")
+                getClassFilePath("bytecode_samples/CWE566_Authorization_Bypass_Through_SQL_Primary__Servlet_01.class"),
+                getClassFilePath("testcode/sparrow/InappropriateAuthorization")
         };
 
         //Run the analysis
@@ -42,8 +43,16 @@ public class InappropriateAuthorizationDetectorTest extends BaseDetectorTest {
         verify(reporter).doReportBug(
                 bugDefinition()
                         .bugType("INAPPROPRIATE_AUTHORIZATION")
-                        .inClass("CWE566_Authorization_Bypass_Through_SQL_Primary__Servlet_01").inMethod("bad").atLine(57)
+                        .inClass("InappropriateAuthorization")
+                        .inMethod("bad")
+                        .atLine(15)
                         .build()
+        );
+
+        verify(reporter).doReportBug(
+                bugDefinition()
+                        .bugType("INAPPROPRIATE_AUTHORIZATION")
+                        .inClass("CWE566_Authorization_Bypass_Through_SQL_Primary__Servlet_01").inMethod("bad").atLine(57).build()
         );
     }
 }
