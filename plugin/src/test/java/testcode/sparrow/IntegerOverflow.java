@@ -55,4 +55,13 @@ public class IntegerOverflow {
         result = data + data;
         System.out.println("False positive: " + data);
     }
+
+    public void good() {
+        int data;
+        int temp=256;
+        data = 1;
+        data = 2;
+        data = temp;
+        data = temp + 1;
+    }
 }

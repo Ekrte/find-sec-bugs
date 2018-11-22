@@ -18,12 +18,23 @@
 package com.h3xstream.findsecbugs.sparrow;
 
 import com.h3xstream.findsecbugs.injection.BasicInjectionDetector;
+import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import edu.umd.cs.findbugs.BugReporter;
+import edu.umd.cs.findbugs.Priorities;
 
 public class IntegerOverflowDetector extends BasicInjectionDetector {
 
     public IntegerOverflowDetector(BugReporter bugReporter) {
         super(bugReporter);
         setEnableIntegerOverflow();
+    }
+
+    @Override
+    protected int getPriority(Taint taint) {
+        if (taint.hasTag(Taint.Tag.INTEGER_OVERFLOW)) {
+            return Priorities.HIGH_PRIORITY;
+        } else {
+            return Priorities.IGNORE_PRIORITY;
+        }
     }
 }

@@ -311,6 +311,22 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
     }
 
     @Override
+    public void visitIADD(IADD obj) {
+        try {
+            int numConsumed = obj.consumeStack(cpg); //2
+            if (numConsumed == Const.UNPREDICTABLE || numConsumed != 2) {
+                throw new InvalidBytecodeException("Unpredictable stack consumption");
+            }
+            Taint value1 = new Taint(getFrame().popValue());
+            Taint value2 = new Taint(getFrame().popValue());
+            Taint result = Taint.merge(value1, value2);
+            getFrame().pushValue(result);
+        } catch (DataflowAnalysisException ex) {
+            throw new InvalidBytecodeException(ex.toString(), ex);
+        }
+    }
+
+    @Override
     public void handleLoadInstruction(LoadInstruction load) {
         int numProducedOrig = load.produceStack(cpg);
         int numProduced = numProducedOrig;

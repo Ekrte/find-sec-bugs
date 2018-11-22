@@ -9,4 +9,4 @@ java/lang/System.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Str
 -- Integer Overflow
 
 java/net/URLConnection.getInputStream()Ljava/io/InputStream;:TAINTED
-java/lang/Integer.parseInt(Ljava/lang/String;)I:0
+java/lang/Integer.parseInt(Ljava/lang/String;)I:0|+INTEGER_OVERFLOW
