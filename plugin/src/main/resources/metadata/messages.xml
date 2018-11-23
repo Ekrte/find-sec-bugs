@@ -9,6 +9,26 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Race Condition Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.RaceConditionDetector">
+        <Details>Detect race condition.
+        </Details>
+    </Detector>
+
+    <BugPattern type="RACE_CONDITION_FILE_IO">
+        <ShortDescription>The software checks the state of a resource before using that resource.</ShortDescription>
+        <LongDescription>The resource's state can change between the check and the use in a way that invalidates the results of the check.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> Time-of-check Time-of-use(TOCTOU) race condition weakness can cause the software to perform invalid actions when the resource is in an unexpected state.
+This weakness can be security-relevant when an attacker can influence the state of the resource between check and use.
+This can happen with shared resources such as file, memory, or even variables in multithreaded programs.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECRCF">Race Condition at File IO</BugCode>
+
     <!-- Inappropriate Authorization Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.InappropriateAuthorizationDetector">
         <Details>Detect inappropriate authorization.
