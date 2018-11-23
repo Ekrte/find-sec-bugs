@@ -28,13 +28,4 @@ public class IntegerOverflowDetector extends BasicInjectionDetector {
         super(bugReporter);
         setEnableIntegerOverflow();
     }
-
-    @Override
-    protected int getPriority(Taint taint) {
-        if (taint.hasTag(Taint.Tag.INTEGER_OVERFLOW)) {
-            return Priorities.HIGH_PRIORITY;
-        } else {
-            return Priorities.IGNORE_PRIORITY;
-        }
-    }
 }
