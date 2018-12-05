@@ -12,5 +12,5 @@ public class FileWriteThread extends Thread {
                 bw.close();
             }
         } catch (IOException e) { }
-    } /* BUG */ // resource leak
+    }
 }

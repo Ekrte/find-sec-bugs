@@ -64,4 +64,43 @@ public class IntegerOverflow {
         data = temp;
         data = temp + 1;
     }
+
+
+    private void goodB(byte data) throws Throwable
+    {
+        byte result = 0;
+        byte safe = (byte)1;
+        result = (byte) (new java.security.SecureRandom()).nextInt(1+Byte.MAX_VALUE-Byte.MIN_VALUE);
+        result = (byte)(result + 1);
+
+        data = (byte)((new java.security.SecureRandom()).nextInt(1+Byte.MAX_VALUE-Byte.MIN_VALUE) + Byte.MIN_VALUE);
+        if (data < Byte.MAX_VALUE)
+        {
+            result = (byte)(data + 1);
+        }
+        else
+        {
+            System.out.println("data value is too large to perform addition." + result);
+        }
+    }
+
+    private void goodI(int data) throws Throwable
+    {
+        int result = 0;
+        int max_value = Integer.MAX_VALUE;
+        if (data < Integer.MAX_VALUE)
+        {
+            result = data + 1;
+        }
+        if(Integer.MAX_VALUE > data) {
+            result = data - 1;
+        }
+        if(max_value > data) {
+            result = data - 1;
+        }
+        else
+        {
+            System.out.println("data value is too large to perform addition." + result);
+        }
+    }
 }

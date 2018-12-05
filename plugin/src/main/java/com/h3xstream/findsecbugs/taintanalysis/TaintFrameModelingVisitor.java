@@ -36,6 +36,8 @@ import java.util.logging.Logger;
 import org.apache.bcel.Const;
 import org.apache.bcel.generic.*;
 
+import static com.h3xstream.findsecbugs.taintanalysis.Taint.Tag.INTEGER_OVERFLOW_SAFE;
+
 /**
  * Visitor to make instruction transfer of taint values easier
  *
@@ -309,6 +311,65 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
             throw new InvalidBytecodeException(ex.toString(), ex);
         }
     }
+    /*
+    public void checkIntegerBound(IfInstruction obj) {
+        int numConsumed = obj.consumeStack(cpg); //2
+        if (numConsumed == Const.UNPREDICTABLE || numConsumed != 2) {
+            throw new InvalidBytecodeException("Unpredictable stack consumption");
+        }
+        try {
+            Taint value1 = new Taint(getFrame().popValue());
+            Taint value2 = new Taint(getFrame().popValue());
+            if(value1.isSafe() && value2.isSafe()) return;
+
+            Taint value;
+            value = value1.isSafe()? value2 : value1;
+
+            if(!value.hasValidVariableIndex()) {
+                throw new RuntimeException("index not set in " + methodDescriptor);
+            } else {
+                value.addTag(INTEGER_OVERFLOW_SAFE);
+                int index = value.getVariableIndex();
+                value.setVariableIndex(index);
+                getFrame().setValue(index, value);
+            }
+        } catch (DataflowAnalysisException ex) {
+            throw new InvalidBytecodeException(ex.toString(), ex);
+        }
+    }
+    */
+
+    public void checkIntegerBound(IfInstruction obj) {
+        int numConsumed = obj.consumeStack(cpg); //2
+        if (numConsumed == Const.UNPREDICTABLE || numConsumed != 2) {
+            throw new InvalidBytecodeException("Unpredictable stack consumption");
+        }
+        try {
+            int index;
+            while (numConsumed-- > 0) {
+                Taint value = new Taint(getFrame().popValue());
+                if(value.isSafe()) continue;
+                if(!value.hasValidVariableIndex()) continue;
+
+                index = value.getVariableIndex();
+                Taint local_variable = getFrame().getValue(index);
+                local_variable.addTag(INTEGER_OVERFLOW_SAFE);
+                getFrame().setValue(index, local_variable);
+            }
+        } catch (DataflowAnalysisException ex) {
+            throw new InvalidBytecodeException(ex.toString(), ex);
+        }
+    }
+
+    @Override
+    public void visitIF_ICMPLE(IF_ICMPLE obj) {
+        checkIntegerBound(obj);
+    }
+
+    @Override
+    public void visitIF_ICMPGE(IF_ICMPGE obj) {
+        checkIntegerBound(obj);
+    }
 
     @Override
     public void visitIADD(IADD obj) {
@@ -321,6 +382,16 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
             Taint value2 = new Taint(getFrame().popValue());
             Taint result = Taint.merge(value1, value2);
             getFrame().pushValue(result);
+        } catch (DataflowAnalysisException ex) {
+            throw new InvalidBytecodeException(ex.toString(), ex);
+        }
+    }
+
+    @Override
+    public void visitI2B(I2B obj) {
+        try {
+            Taint value = new Taint(getFrame().popValue());
+            getFrame().pushValue(value);
         } catch (DataflowAnalysisException ex) {
             throw new InvalidBytecodeException(ex.toString(), ex);
         }

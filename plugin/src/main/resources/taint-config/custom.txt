@@ -10,3 +10,4 @@ java/lang/System.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Str
 
 java/net/URLConnection.getInputStream()Ljava/io/InputStream;:TAINTED
 java/lang/Integer.parseInt(Ljava/lang/String;)I:0
+java/security/SecureRandom.nextInt(I)I:SAFE

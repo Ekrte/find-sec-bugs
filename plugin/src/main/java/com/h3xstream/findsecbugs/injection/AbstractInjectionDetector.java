@@ -109,23 +109,29 @@ public abstract class AbstractInjectionDetector extends AbstractTaintDetector {
     @Override
     protected void analyzeIntegerOverflow(ClassContext classContext, Method method, InstructionHandle handle,
     ConstantPoolGen cpg, TaintFrame fact) throws DataflowAnalysisException {
-        SourceLineAnnotation sourceLine = SourceLineAnnotation.fromVisitedInstruction(classContext, method, handle);
-        for (int offset : Arrays.asList(0,1)) {
-            int priority = getPriorityFromTaintFrame(fact, offset);
-            if (priority == Priorities.IGNORE_PRIORITY) {
-                continue;
-            }
-
-            Taint parameterTaint = fact.getStackValue(offset);
-            String injectableMethod = "IADD";
-            InjectionSink injectionSink = new InjectionSink(this, "INTEGER_OVERFLOW", HIGH_PRIORITY,
-                    classContext, method, handle, injectableMethod, 0);
-            injectionSink.addLines(parameterTaint.getAllLocations());
-            injectionSink.addSources(parameterTaint.getSources());
-
-            bugReporter.reportBug(injectionSink.generateBugInstance(true));
+        if (getPriorityFromTaintFrame(fact, 0) == Priorities.IGNORE_PRIORITY
+         && getPriorityFromTaintFrame(fact, 1) == Priorities.IGNORE_PRIORITY) {
             return;
         }
+
+        InjectionSink injectionSink = new InjectionSink(this, "INTEGER_OVERFLOW", HIGH_PRIORITY,
+                classContext, method, handle, "IADD", 0);
+
+        if (getPriorityFromTaintFrame(fact, 0) != Priorities.IGNORE_PRIORITY) {
+            Taint parameterTaint = fact.getStackValue(0);
+            Taint value = fact.getValue(0);
+            injectionSink.addLines(parameterTaint.getAllLocations());
+            injectionSink.addLines(value.getAllLocations());
+            injectionSink.addSources(parameterTaint.getSources());
+        }
+        if (getPriorityFromTaintFrame(fact, 1) != Priorities.IGNORE_PRIORITY) {
+            Taint parameterTaint = fact.getStackValue(1);
+            Taint value = fact.getValue(1);
+            injectionSink.addLines(parameterTaint.getAllLocations());
+            injectionSink.addLines(value.getAllLocations());
+            injectionSink.addSources(parameterTaint.getSources());
+        }
+        bugReporter.reportBug(injectionSink.generateBugInstance(true));
     }
 
     /**
