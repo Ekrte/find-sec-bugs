@@ -1,0 +1,3 @@
+java/sql/DriverManager.getConnection(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/Connection;:0
+javax/security/auth/kerberos/KerberosKey.<init>(Ljavax/security/auth/kerberos/KerberosPrincipal;[CLjava/lang/String;)V:1
+java/net/PasswordAuthentication.<init>(Ljava/lang/String;[C)V:0

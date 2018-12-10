@@ -131,7 +131,9 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.UnsaltedOneWayHashDetector" reports="UNSALTED_ONE_WAY_HASH"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InappropriateAuthorizationDetector" reports="INAPPROPRIATE_AUTHORIZATION"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.RaceConditionDetector" reports="RACE_CONDITION_FILE_IO"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.SensitiveClearTextDetector" reports="SENSITIVE_CLEARTEXT"/>
 
+    <BugPattern type="SENSITIVE_CLEARTEXT" abbrev="SECSTCT" category="SECURITY"/>
     <BugPattern type="RACE_CONDITION_FILE_IO" abbrev="SECRCF" category="SECURITY"/>
     <BugPattern type="INAPPROPRIATE_AUTHORIZATION" abbrev="SECIA" category="SECURITY"/>
     <BugPattern type="UNSALTED_ONE_WAY_HASH" abbrev="SECUH" category="SECURITY"/>

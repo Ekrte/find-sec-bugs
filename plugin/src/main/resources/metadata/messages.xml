@@ -9,6 +9,27 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Sensitive Plaintext Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.SensitiveClearTextDetector">
+        <Details>Detect sensitive plaintext.
+        </Details>
+    </Detector>
+
+    <BugPattern type="SENSITIVE_CLEARTEXT">
+        <ShortDescription>The software transmits sensitive or security-critical data in cleartext.</ShortDescription>
+        <LongDescription>The software transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> Many communication channels can be "sniffed" by attackers during data retransmission.
+For example, network traffic can often be sniffed by any attacker who has access to a network interface.
+The significantly lowers the difficulty of exploitation by attackers.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECSTCT">Race Condition at File IO</BugCode>
+
+
     <!-- Race Condition Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.RaceConditionDetector">
         <Details>Detect race condition.
