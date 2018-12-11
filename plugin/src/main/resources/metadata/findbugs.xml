@@ -133,7 +133,9 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.RaceConditionDetector" reports="RACE_CONDITION_FILE_IO"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.SensitiveClearTextDetector" reports="SENSITIVE_CLEARTEXT"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InsufficientSessionExpirationDetector" reports="INSUFFICIENT_SESSION_EXPIRATION"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.NullCheckAfterDerefDetector" reports="NULL_CHECK_AFTER_DEREF"/>
 
+    <BugPattern type="NULL_CHECK_AFTER_DEREF" abbrev="SECNCAD" category="SECURITY"/>
     <BugPattern type="INSUFFICIENT_SESSION_EXPIRATION" abbrev="SECISE" category="SECURITY"/>
     <BugPattern type="SENSITIVE_CLEARTEXT" abbrev="SECSTCT" category="SECURITY"/>
     <BugPattern type="RACE_CONDITION_FILE_IO" abbrev="SECRCF" category="SECURITY"/>

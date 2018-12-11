@@ -9,6 +9,28 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Null Check After Dereference Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.NullCheckAfterDerefDetector">
+        <Details>Detect insufficient session expiration.
+        </Details>
+    </Detector>
+
+    <BugPattern type="NULL_CHECK_AFTER_DEREF">
+        <ShortDescription>Check an existence of a object after dereferencing that object.</ShortDescription>
+        <LongDescription>Once dereferencing a object, it is unnecessary to check null for that object.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>
+Once de-referencing a object, it is unnecessary to check null for that object.
+If the object is null, NullPointerException occur before null-checking.
+It is recommended that null checking is operated before the dereferencing object.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECNCAD">Null Check After Dereference</BugCode>
+
+
     <!-- Insufficient Session Expiration Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.InsufficientSessionExpirationDetector">
         <Details>Detect insufficient session expiration.
