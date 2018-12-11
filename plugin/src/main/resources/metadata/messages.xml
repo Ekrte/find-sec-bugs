@@ -9,6 +9,39 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Insufficient Session Expiration Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InsufficientSessionExpirationDetector">
+        <Details>Detect insufficient session expiration.
+        </Details>
+    </Detector>
+
+    <BugPattern type="INSUFFICIENT_SESSION_EXPIRATION">
+        <ShortDescription>A negative time indicates the session should never expire</ShortDescription>
+        <LongDescription>Insufficient session expiration is when a web site permits an attacker to reuse old session credentials or session IDs for authorization.</LongDescription>
+        <Details>
+            <![CDATA[
+<p> The following snippet was taken from a J2EE web.xml deployment descriptor in which the session-timeout parameter is explicitly defined (the default value depends on the container).
+In this case the value is set to -1, which means that a session will never expire.
+
+<br/>
+
+<p>
+    <b>Vulnerable Code:</b><br/>
+<pre>
+        HttpSession sesssion = request.getSession(true);
+        sesssion.setMaxInactiveInterval(-1);
+}</pre>
+</p>
+<br/>
+
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECISE">Insufficient Session Expiration</BugCode>
+
+
+
     <!-- Sensitive Plaintext Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.SensitiveClearTextDetector">
         <Details>Detect sensitive plaintext.
