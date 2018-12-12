@@ -9,6 +9,27 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Incomplete Cleanup Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.IncompleteCleanUpDetector">
+        <Details>Detect incomplete clean up file.
+        </Details>
+    </Detector>
+
+    <BugPattern type="INCOMPLETE_CLEANUP">
+        <ShortDescription>Temporary files should be removed except using .deleteOnExit() with Servlet.</ShortDescription>
+        <LongDescription>The software does not properly "clean up" and remove temporary or supporting resources after they have been used.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>
+In general, temporary files and other supporting resources should be deleted/released immediately after they are no longer needed.
+However, using .deleteOnExit() to delete the file for a Servlet can keep the file in existence for a long time as it will not be deleted until the JVM is shut down.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECICU">Incomplete Cleanup file</BugCode>
+
+
     <!-- Null Check After Dereference Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.NullCheckAfterDerefDetector">
         <Details>Detect insufficient session expiration.

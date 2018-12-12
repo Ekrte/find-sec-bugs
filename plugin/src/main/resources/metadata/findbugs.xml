@@ -134,7 +134,9 @@
     <Detector class="com.h3xstream.findsecbugs.sparrow.SensitiveClearTextDetector" reports="SENSITIVE_CLEARTEXT"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.InsufficientSessionExpirationDetector" reports="INSUFFICIENT_SESSION_EXPIRATION"/>
     <Detector class="com.h3xstream.findsecbugs.sparrow.NullCheckAfterDerefDetector" reports="NULL_CHECK_AFTER_DEREF"/>
+    <Detector class="com.h3xstream.findsecbugs.sparrow.IncompleteCleanUpDetector" reports="INCOMPLETE_CLEANUP"/>
 
+    <BugPattern type="INCOMPLETE_CLEANUP" abbrev="SECICU" category="SECURITY"/>
     <BugPattern type="NULL_CHECK_AFTER_DEREF" abbrev="SECNCAD" category="SECURITY"/>
     <BugPattern type="INSUFFICIENT_SESSION_EXPIRATION" abbrev="SECISE" category="SECURITY"/>
     <BugPattern type="SENSITIVE_CLEARTEXT" abbrev="SECSTCT" category="SECURITY"/>
