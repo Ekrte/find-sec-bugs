@@ -9,6 +9,26 @@
         <AllBugsUrl>http://find-sec-bugs.github.io/bugs.htm</AllBugsUrl>
     </Plugin>
 
+    <!-- Infinite Recursive Pattern Detector -->
+    <Detector class="com.h3xstream.findsecbugs.sparrow.InfiniteLoopPatternDetector">
+        <Details>Detect loop with unreachable exit condition.
+        </Details>
+    </Detector>
+
+    <BugPattern type="INFINITE_LOOP_PATTERN">
+        <ShortDescription>There is no exit condition in the loop.</ShortDescription>
+        <LongDescription>The program contains an iteration or loop with an exit condition that cannot be reached.</LongDescription>
+        <Details>
+            <![CDATA[
+<p>
+If the loop can be influenced by an attacker, this weakness could allow attackers to consume excessive resources such as CPU or memory.
+</p>
+]]>
+        </Details>
+    </BugPattern>
+    <BugCode abbrev="SECILP">Infinite Loop Pattern</BugCode>
+
+
     <!-- Incomplete Cleanup Detector -->
     <Detector class="com.h3xstream.findsecbugs.sparrow.IncompleteCleanUpDetector">
         <Details>Detect incomplete clean up file.
