@@ -40,7 +40,6 @@ public class InsufficientSessionExpirationDetector extends OpcodeStackDetector {
             Integer n = (maxAge instanceof Integer) ? (Integer)maxAge : 0;
 
             //Max age equal or greater than one year
-            System.out.println("|DEBUG| n is " + n);
             if (n == -1) {
                 bugReporter.reportBug(new BugInstance(this, "INSUFFICIENT_SESSION_EXPIRATION", Priorities.NORMAL_PRIORITY) //
                         .addClass(this).addMethod(this).addSourceLine(this));

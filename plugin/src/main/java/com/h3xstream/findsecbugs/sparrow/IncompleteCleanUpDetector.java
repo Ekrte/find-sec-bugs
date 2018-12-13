@@ -51,24 +51,6 @@ public class IncompleteCleanUpDetector implements Detector {
         this.bugReporter = bugReporter;
     }
 
-    private boolean checkThreadClass(JavaClass javaClass) {
-        try {
-            JavaClass test = javaClass.getSuperClass();
-            Method[] methodList = javaClass.getMethods();
-
-            while(!(test.getClassName().contains("Object"))) { // It means this class has no explicit SuperClass
-                for (String tokens : test.getClassName().split("\\.")) {
-                    if (tokens.equals("Thread")) return true;
-                }
-                test = test.getSuperClass(); // Final class would be "Object"
-            }
-            return false;
-        } catch(ClassNotFoundException ex) {
-            AnalysisContext.reportMissingClass(ex);
-            return false;
-        }
-    }
-
     @Override
     public void visitClassContext(ClassContext classContext) {
         JavaClass javaClass = classContext.getJavaClass();
@@ -93,7 +75,6 @@ public class IncompleteCleanUpDetector implements Detector {
                     }
                 }
             } catch (CFGBuilderException e) {
-                System.out.println("|INFO |" + getClass() + " : " + e);
             }
         }
     }
