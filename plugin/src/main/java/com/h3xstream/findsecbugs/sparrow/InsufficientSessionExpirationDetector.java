@@ -23,6 +23,14 @@ import edu.umd.cs.findbugs.Priorities;
 import edu.umd.cs.findbugs.bcel.OpcodeStackDetector;
 import org.apache.bcel.Const;
 
+/**
+ * Insufficient session expiration is when a web site permits an attacker to reuse old session credentials or session IDs for authorization.
+ * Detects that expiration time for a web session is too long.
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/613.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class InsufficientSessionExpirationDetector extends OpcodeStackDetector {
 
     private BugReporter bugReporter;

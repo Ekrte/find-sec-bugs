@@ -30,10 +30,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The code for debugging should be removed before release.
- * Debug code may includes sensitive information such as configuration, control portion of system.
+ * Catching exceptions improperly promotes complex error handling code.
+ * Detects the usage of general exception and NullPointerException.
  * <br>
- *     http://cwe.mitre.org/data/definitions/489.html
+ *     http://cwe.mitre.org/data/definitions/395.html
+ *     http://cwe.mitre.org/data/definitions/396.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
  */
 public class ImproperCheckForExceptionalConditionsDetector extends PreorderVisitor implements Detector {
 

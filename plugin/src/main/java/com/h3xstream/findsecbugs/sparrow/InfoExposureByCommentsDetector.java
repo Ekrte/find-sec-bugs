@@ -34,10 +34,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The code for debugging should be removed before release.
- * Debug code may includes sensitive information such as configuration, control portion of system.
+ * Some comments possibly contain important system data such as file path, ID, password.
+ * Detects information exposure by servlet comments.
  * <br>
- *     http://cwe.mitre.org/data/definitions/489.html
+ *     http://cwe.mitre.org/data/definitions/615.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
  */
 public class InfoExposureByCommentsDetector implements Detector {
 

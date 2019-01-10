@@ -22,6 +22,14 @@ import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Priorities;
 
+/**
+ * Calculating integer value with a external value such as environment variable could cause integer overflow.
+ * This detector is experimental.
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/190.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class IntegerOverflowDetector extends BasicInjectionDetector {
 
     public IntegerOverflowDetector(BugReporter bugReporter) {

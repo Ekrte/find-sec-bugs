@@ -22,6 +22,16 @@ import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Priorities;
 
+/**
+ * Detects the usage of sensitive information without encryption.
+ * Users could add proprietary method at sensitive-clear-text.txt
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/256.html
+ *     http://cwe.mitre.org/data/definitions/319.html
+ *     http://cwe.mitre.org/data/definitions/614.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class SensitiveClearTextDetector extends BasicInjectionDetector {
     public SensitiveClearTextDetector(BugReporter bugReporter) {
         super(bugReporter);

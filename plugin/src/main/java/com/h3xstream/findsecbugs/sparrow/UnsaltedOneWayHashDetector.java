@@ -36,6 +36,14 @@ import java.util.Map;
 
 import static com.h3xstream.findsecbugs.common.matcher.InstructionDSL.invokeInstruction;
 
+/**
+ * Cryptographic hash without salt is vulnerable against dictionary attack.
+ * Detects the usage of hash without updating a salt.
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/756.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class UnsaltedOneWayHashDetector implements Detector {
     private static final String DEBUG_CODE = "UNSALTED_ONE_WAY_HASH";
     private static final InvokeMatcherBuilder SALT_UPDATE = invokeInstruction().atClass("java/security/MessageDigest").atMethod("update");

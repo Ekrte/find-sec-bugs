@@ -35,6 +35,8 @@ import java.util.Iterator;
  * Debug code may includes sensitive information such as configuration, control portion of system.
  * <br>
  *     http://cwe.mitre.org/data/definitions/489.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
  */
 public class DebugCodeDetector implements Detector {
 

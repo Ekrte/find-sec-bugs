@@ -30,10 +30,11 @@ import org.apache.bcel.generic.*;
 import java.util.*;
 
 /**
- * The code for debugging should be removed before release.
- * Debug code may includes sensitive information such as configuration, control portion of system.
+ * If multiple threads of execution use a resource simultaneously, atomicity of operation could not be guaranteed.
  * <br>
- *     http://cwe.mitre.org/data/definitions/489.html
+ *     http://cwe.mitre.org/data/definitions/366.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
  */
 public class RaceConditionDetector implements Detector {
 

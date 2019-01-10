@@ -26,6 +26,14 @@ import org.apache.bcel.Const;
 
 import static com.h3xstream.findsecbugs.common.matcher.InstructionDSL.invokeInstruction;
 
+/**
+ * Do not use deprecated API such as System Exit.
+ * Detects the usage of Runtime.exit() or System.exit()
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/382.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class UseOfDeprecatedApiDetector extends OpcodeStackDetector {
 
     private static final InvokeMatcherBuilder RUNTIME_EXIT = invokeInstruction().atClass("java/lang/Runtime").atMethod("exit");

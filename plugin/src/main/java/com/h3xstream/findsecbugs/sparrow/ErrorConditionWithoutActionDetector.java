@@ -36,6 +36,8 @@ import java.util.*;
  * In a below example, there is no exception handling even if exception is caught in try block.</p>
  * <br>
  *     https://cwe.mitre.org/data/definitions/390.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
  */
 public class ErrorConditionWithoutActionDetector extends PreorderVisitor implements Detector {
 

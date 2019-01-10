@@ -25,6 +25,16 @@ import edu.umd.cs.findbugs.bcel.OpcodeStackDetector;
 
 import java.util.*;
 
+/**
+ * Dereferencing a NULL object typically causing a crash or exit.
+ * Before using object, ensuring that object is not empty is essential.
+ * Detects that checking NULL after using object.
+ * After once dereferencing object, it is useless to check NULL.
+ * <br>
+ *     http://cwe.mitre.org/data/definitions/479.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class NullCheckAfterDerefDetector extends OpcodeStackDetector {
 
     private final BugReporter bugReporter;

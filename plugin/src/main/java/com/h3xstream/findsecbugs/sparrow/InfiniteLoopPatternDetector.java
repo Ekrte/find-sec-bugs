@@ -30,7 +30,13 @@ import org.apache.bcel.generic.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
+/**
+ * Detects iteration or loop with an exit condition that cannot be reached.
+ * </br>
+ *     https://cwe.mitre.org/data/definitions/835.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class InfiniteLoopPatternDetector implements Detector {
 
     private static final String INFINITE_LOOP_PATTERN = "INFINITE_LOOP_PATTERN";

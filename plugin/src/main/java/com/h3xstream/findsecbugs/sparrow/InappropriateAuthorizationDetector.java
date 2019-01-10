@@ -22,6 +22,14 @@ import com.h3xstream.findsecbugs.taintanalysis.Taint;
 import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.Priorities;
 
+/**
+ * Detects inappropriate permission for critical function.
+ * Authorization check should be needed before using critical function.
+ * User can define a proprietary critical function at inappropriate-authorization.txt
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
+
 public class InappropriateAuthorizationDetector extends BasicInjectionDetector {
     public InappropriateAuthorizationDetector(BugReporter bugReporter) {
         super(bugReporter);

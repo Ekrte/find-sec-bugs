@@ -34,6 +34,13 @@ import java.util.Map;
 
 import static com.h3xstream.findsecbugs.common.matcher.InstructionDSL.invokeInstruction;
 
+/**
+ * Detects incomplete clean up for temporary resource after they have been used.
+ * </br>
+ *     https://cwe.mitre.org/data/definitions/459.html
+ *
+ * @author Dongyong Kim (Sparrow Co., Ltd.)
+ */
 public class IncompleteCleanUpDetector implements Detector {
 
     private static final String INCOMPLETE_CLEANUP = "INCOMPLETE_CLEANUP";
